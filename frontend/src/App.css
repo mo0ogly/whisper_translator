@@ -1,0 +1,339 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #1e1e1e;
+  color: #eeeeee;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.app-title span {
+  color: #007acc;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: #2d2d2d;
+  color: #cccccc;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tab-btn:hover {
+  background: #3c3c3c;
+}
+
+.tab-btn.active {
+  background: #007acc;
+  color: #ffffff;
+}
+
+/* Panels */
+.panel {
+  background: #252526;
+  border-radius: 0 0 12px 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.panel-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+/* Form elements */
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #999999;
+  font-weight: 500;
+}
+
+.form-group select {
+  padding: 8px 12px;
+  background: #1e1e1e;
+  color: #eeeeee;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  border-color: #007acc;
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed #3c3c3c;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 16px;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #007acc;
+  background: rgba(0, 122, 204, 0.08);
+}
+
+.drop-zone p {
+  color: #999999;
+  font-size: 0.95rem;
+}
+
+.drop-zone .icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.file-list {
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.file-list li {
+  padding: 6px 12px;
+  background: #1e1e1e;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-list li .remove-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 4px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #007acc;
+  color: white;
+}
+
+.btn-purple {
+  background: #8a2be2;
+  color: white;
+}
+
+.btn-download {
+  background: #2ecc71;
+  color: white;
+  margin-top: 12px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Sub-tabs (Ollama panel) */
+.sub-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sub-tab-btn {
+  padding: 8px 16px;
+  background: #1e1e1e;
+  color: #cccccc;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.sub-tab-btn.active {
+  background: #8a2be2;
+  color: white;
+  border-color: #8a2be2;
+}
+
+/* Result area */
+.result-area {
+  background: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+/* Progress bar */
+.progress-container {
+  margin-bottom: 16px;
+}
+
+.progress-label {
+  font-size: 0.85rem;
+  color: #999999;
+  margin-bottom: 6px;
+}
+
+.progress-track {
+  height: 8px;
+  background: #2d2d2d;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007acc, #00b4d8);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Log console */
+.log-console {
+  background: #0d1117;
+  border: 1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 240px;
+  overflow-y: auto;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.log-console .log-line {
+  padding: 1px 0;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.log-header h3 {
+  font-size: 0.95rem;
+  color: #cccccc;
+  font-weight: 500;
+}
+
+.log-header button {
+  background: #2d2d2d;
+  border: none;
+  color: #999;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.log-header button:hover {
+  background: #3c3c3c;
+  color: #eee;
+}
+
+/* Status badges */
+.status-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-badge.ok {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+.status-badge.error {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
