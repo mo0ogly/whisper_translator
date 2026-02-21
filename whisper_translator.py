@@ -12,7 +12,7 @@ from faster_whisper import WhisperModel
 
 
 class WhisperTranslatorApp:
-    """Application Tkinter de transcription/traduction audio/video."""
+    """Tkinter application for audio/video transcription and translation."""
 
     LANG_CODES = {
         "Anglais": "en",
@@ -41,7 +41,7 @@ class WhisperTranslatorApp:
     OLLAMA_URL = "http://localhost:11434/api/generate"
     OLLAMA_MODEL = "mistral"
 
-    # Theme sombre
+    # Dark theme colors
     BG_DARK = "#1e1e1e"
     BG_WIDGET = "#2d2d2d"
     BG_BUTTON = "#3c3c3c"
@@ -74,7 +74,7 @@ class WhisperTranslatorApp:
         self._build_ui()
         self._poll_queue()
 
-    # ──────────────────────────── UI ────────────────────────────
+    # ──────────────────────────── UI ───────────────────────────────
 
     def _build_ui(self):
         tk.Label(self.root, text="Dossier contenant vos fichiers audio/video :",
@@ -128,7 +128,7 @@ class WhisperTranslatorApp:
                             insertbackground="white", wrap="word", relief="flat")
         self.log.pack(padx=10, pady=10)
 
-    # ──────────────────── Thread-safe GUI ────────────────────
+    # ──────────────────── Thread-safe GUI updates ─────────────
 
     def _poll_queue(self):
         try:
@@ -169,7 +169,7 @@ class WhisperTranslatorApp:
     def _show_info(self, title, message):
         self._msg_queue.put(lambda: messagebox.showinfo(title, message))
 
-    # ──────────────────── Utilitaires ────────────────────────
+    # ──────────────────── Utilities ──────────────────────────
 
     @staticmethod
     def _check_ffmpeg():
@@ -219,7 +219,7 @@ class WhisperTranslatorApp:
             self._log_message(f"Erreur Ollama : {e}", color="orange")
             return text
 
-    # ──────────────────── Whisper ─────────────────────────────
+    # ──────────────────── Whisper transcription ────────────────
 
     def _transcribe_to_srt(self, model, file_path, output_path, audio_code,
                             target_code):
@@ -238,7 +238,7 @@ class WhisperTranslatorApp:
                 text = segment.text.strip()
                 f.write(f"{idx}\n{start} --> {end}\n{text}\n\n")
 
-    # ──────────────────── Handlers boutons ────────────────────
+    # ──────────────────── Button handlers ──────────────────────
 
     def _choose_directory(self):
         d = filedialog.askdirectory()
@@ -287,7 +287,7 @@ class WhisperTranslatorApp:
         threading.Thread(target=self._translate_text_ollama, args=(fichier,),
                          daemon=True).start()
 
-    # ──────────────────── Workers (threads) ───────────────────
+    # ──────────────────── Worker threads ───────────────────────
 
     def _batch_transcribe(self, dossier):
         try:
@@ -469,7 +469,7 @@ class WhisperTranslatorApp:
             self._log_message(f"Erreur : {e}", color="red")
             traceback.print_exc()
 
-    # ──────────────────── Entry point ─────────────────────────
+    # ──────────────────── Entry point ──────────────────────────
 
     def run(self):
         self.root.mainloop()

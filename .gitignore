@@ -38,3 +38,4 @@ subtitle_fr/
 whisper_translator_gui.py
 whisper_translator_gui2.py
 whisper_translator_gui3.py
+.env

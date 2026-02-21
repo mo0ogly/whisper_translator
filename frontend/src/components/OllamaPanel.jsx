@@ -1,20 +1,10 @@
-import { useState, useRef } from "react";
-
-const LANGUAGES = {
-  Anglais: "en",
-  Francais: "fr",
-  Espagnol: "es",
-  Allemand: "de",
-  Italien: "it",
-  Japonais: "ja",
-  Chinois: "zh",
-};
-const LANG_KEYS = Object.keys(LANGUAGES);
+import { useState, useRef, useCallback } from "react";
+import { LANGUAGES, LANG_KEYS } from "../constants";
 
 export default function OllamaPanel({ addLog }) {
   const [subTab, setSubTab] = useState("srt");
-  const [sourceLang, setSourceLang] = useState("Anglais");
-  const [targetLang, setTargetLang] = useState("Francais");
+  const [sourceLang, setSourceLang] = useState("English");
+  const [targetLang, setTargetLang] = useState("French");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -22,12 +12,29 @@ export default function OllamaPanel({ addLog }) {
   const inputRef = useRef(null);
 
   const accept = subTab === "srt" ? ".srt" : ".txt";
-  const label = subTab === "srt" ? "fichier SRT" : "fichier texte";
+  const label = subTab === "srt" ? "SRT file" : "text file";
 
   function handleFile(fileList) {
     const f = fileList[0];
     if (f) setFile(f);
   }
+
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    setDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setDragOver(false);
+  }, []);
+
+  const switchToSrt = useCallback(() => {
+    setSubTab("srt"); setFile(null); setResult(null);
+  }, []);
+
+  const switchToText = useCallback(() => {
+    setSubTab("text"); setFile(null); setResult(null);
+  }, []);
 
   function handleDrop(e) {
     e.preventDefault();
@@ -55,9 +62,9 @@ export default function OllamaPanel({ addLog }) {
       if (!resp.ok) throw new Error(await resp.text());
       const text = await resp.text();
       setResult(text);
-      addLog("Traduction Ollama terminee", "green");
+      addLog("Ollama translation complete", "green");
     } catch (err) {
-      addLog(`Erreur Ollama : ${err.message}`, "red");
+      addLog(`Ollama error: ${err.message}`, "red");
     } finally {
       setLoading(false);
     }
@@ -66,7 +73,7 @@ export default function OllamaPanel({ addLog }) {
   function download() {
     if (!result) return;
     const ext = subTab === "srt" ? ".srt" : ".txt";
-    const name = file.name.replace(/\.[^.]+$/, `_traduit${ext}`);
+    const name = file.name.replace(/\.[^.]+$/, `_translated${ext}`);
     const blob = new Blob([result], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -78,26 +85,26 @@ export default function OllamaPanel({ addLog }) {
 
   return (
     <div className="panel">
-      <h2 className="panel-title">Traduction via Ollama</h2>
+      <h2 className="panel-title">Ollama Translation</h2>
 
       <div className="sub-tabs">
         <button
           className={`sub-tab-btn ${subTab === "srt" ? "active" : ""}`}
-          onClick={() => { setSubTab("srt"); setFile(null); setResult(null); }}
+          onClick={switchToSrt}
         >
-          Sous-titres SRT
+          SRT Subtitles
         </button>
         <button
           className={`sub-tab-btn ${subTab === "text" ? "active" : ""}`}
-          onClick={() => { setSubTab("text"); setFile(null); setResult(null); }}
+          onClick={switchToText}
         >
-          Texte brut
+          Plain Text
         </button>
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label>Langue source</label>
+          <label>Source Language</label>
           <select value={sourceLang} onChange={(e) => setSourceLang(e.target.value)}>
             {LANG_KEYS.map((l) => (
               <option key={l} value={l}>{l}</option>
@@ -105,7 +112,7 @@ export default function OllamaPanel({ addLog }) {
           </select>
         </div>
         <div className="form-group">
-          <label>Langue cible</label>
+          <label>Target Language</label>
           <select value={targetLang} onChange={(e) => setTargetLang(e.target.value)}>
             {LANG_KEYS.map((l) => (
               <option key={l} value={l}>{l}</option>
@@ -116,13 +123,13 @@ export default function OllamaPanel({ addLog }) {
 
       <div
         className={`drop-zone ${dragOver ? "drag-over" : ""}`}
-        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-        onDragLeave={() => setDragOver(false)}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
       >
         <span className="icon">{subTab === "srt" ? "📝" : "📄"}</span>
-        <p>Glissez votre {label} ici ou cliquez pour parcourir</p>
+        <p>Drop your {label} here or click to browse</p>
         <input
           ref={inputRef}
           type="file"
@@ -135,7 +142,7 @@ export default function OllamaPanel({ addLog }) {
       {file && (
         <ul className="file-list">
           <li>
-            <span>{file.name} ({(file.size / 1024).toFixed(1)} Ko)</span>
+            <span>{file.name} ({(file.size / 1024).toFixed(1)} KB)</span>
             <button className="remove-btn" onClick={() => setFile(null)}>
               ✕
             </button>
@@ -148,16 +155,19 @@ export default function OllamaPanel({ addLog }) {
         disabled={!file || loading}
         onClick={translate}
       >
-        {loading ? "Traduction en cours..." : "Traduire avec Ollama"}
+        {loading ? "Translating..." : "Translate with Ollama"}
       </button>
 
       {result && (
-        <>
-          <div className="result-area">{result}</div>
-          <button className="btn btn-download" onClick={download}>
-            Telecharger le resultat
-          </button>
-        </>
+        <div className="result-block">
+          <div className="result-header">
+            <span className="result-filename">Translation Result</span>
+            <button className="btn btn-download" onClick={download}>
+              Download
+            </button>
+          </div>
+          <pre className="result-area">{result}</pre>
+        </div>
       )}
     </div>
   );

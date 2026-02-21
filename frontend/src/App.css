@@ -110,6 +110,24 @@ body {
   border-color: #007acc;
 }
 
+/* Checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #cccccc;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: #007acc;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
 /* Drop zone */
 .drop-zone {
   border: 2px dashed #3c3c3c;
@@ -230,18 +248,45 @@ body {
 }
 
 /* Result area */
-.result-area {
-  background: #1e1e1e;
+.result-block {
+  margin-top: 20px;
   border: 1px solid #3c3c3c;
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: #2d2d2d;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.result-filename {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #007acc;
+}
+
+.result-header .btn-download {
+  margin-top: 0;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+}
+
+.result-area {
+  background: #1e1e1e;
+  margin: 0;
   padding: 16px;
-  margin-top: 16px;
-  max-height: 300px;
+  max-height: 350px;
   overflow-y: auto;
   font-family: "Cascadia Code", "Fira Code", monospace;
   font-size: 0.85rem;
   white-space: pre-wrap;
   line-height: 1.5;
+  color: #eeeeee;
 }
 
 /* Progress bar */
