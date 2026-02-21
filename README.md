@@ -158,19 +158,16 @@ You *must* manually accept the Pyannote license terms on their website for the m
    - [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
    - [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)
 3. Create an Access Token at [HuggingFace Settings -> Access Tokens](https://huggingface.co/settings/tokens). It only needs "Read" permissions.
-4. Set the token on your machine before starting the backend:
+4. **Set the token safely:** Create a file named `.env` in the `backend/` folder and paste your token inside. 
+   
+   *Note: This file is ignored by Git (`.gitignore`), so your token will remain private on your machine and will never be published to GitHub.*
 
-```bash
-export HF_TOKEN="hf_your_token_here"
+```text
+# backend/.env
+HF_TOKEN="hf_your_token_here"
 ```
 
-On Windows PowerShell:
-
-```powershell
-$env:HF_TOKEN = "hf_your_token_here"
-```
-
-The status badge at the top shows "Pyannote OK" when properly configured.
+The status badge at the top of the app will show "Pyannote OK" when properly configured.
 
 **Usage:**
 
