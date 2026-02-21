@@ -149,12 +149,16 @@ Identify who speaks when in a recording and label each subtitle line with the sp
 
 > 🚨 **HARDWARE WARNING:** Pyannote Diarization is an extremely heavy machine learning process. **It is highly recommended to have an NVIDIA GPU with at least 4GB of VRAM.** Running diarization on a CPU or low-end GPU may take **hours** for a long video or even crash due to out-of-memory errors. **Use the "Benchmark my PC" button** in the UI to assess your system.
 
-**Setup (one-time):**
+**Setup (one-time manual step required):**
+
+You *must* manually accept the Pyannote license terms on their website for the model to download. `start.sh` cannot do this for you.
 
 1. Create a free account on [HuggingFace](https://huggingface.co/)
-2. Accept the model license at [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1) and [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)
-3. Create a token at [HuggingFace settings](https://huggingface.co/settings/tokens)
-4. Set the token before starting the backend:
+2. ⚠️ **MANDATORY:** You must visit **BOTH** links below, log in, and click the **"Agree and access repository"** button on each page:
+   - [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
+   - [pyannote/segmentation-3.0](https://huggingface.co/pyannote/segmentation-3.0)
+3. Create an Access Token at [HuggingFace Settings -> Access Tokens](https://huggingface.co/settings/tokens). It only needs "Read" permissions.
+4. Set the token on your machine before starting the backend:
 
 ```bash
 export HF_TOKEN="hf_your_token_here"
